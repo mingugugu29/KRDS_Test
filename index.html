@@ -17,6 +17,7 @@
   --fg:#1E2124; --fg-sub:#464C53; --fg-muted:#6D7882; --fg-faint:#8A949E;
   --bg:#FFFFFF; --bg-sub:#F4F5F6; --bg-mast:#EEF2F7; --bg-card:#F4F5F6; --bg-info:#EEF2F7; --bg-pink:#FBEAE6;
   --line:#CDD1D5; --line-strong:#58616A; --line-soft:#E6E8EA;
+  --emph:#256EF4; --emph2:#0B3B7A; --on-emph:#FFFFFF;
   --font: "Pretendard GOV","Pretendard","Noto Sans KR",system-ui,-apple-system,"Malgun Gothic",sans-serif;
   --scale:1;
 }
@@ -26,6 +27,7 @@
   --fg:#F1F3F5; --fg-sub:#CDD1D5; --fg-muted:#A9B1B8; --fg-faint:#8A949E;
   --bg:#131416; --bg-sub:#1E2124; --bg-mast:#1B1F26; --bg-card:#22262B; --bg-info:#1F2530; --bg-pink:#3A2622;
   --line:#3C434A; --line-strong:#8A949E; --line-soft:#2B3035;
+  --emph:#2F6FE0; --emph2:#1D4FA6;
   color-scheme:dark;
 }
 html{font-size:calc(16px * var(--scale))}
@@ -64,7 +66,10 @@ p{margin:0}
 .gnb{display:flex;align-items:center;gap:4px;margin:0;padding:0;list-style:none}
 .gnb>li>button{padding:12px 14px;font-size:1rem;font-weight:700;border-radius:6px;position:relative}
 .gnb>li>button:hover,.gnb>li>button[aria-expanded="true"]{color:var(--primary)}
-.gnb>li>button[aria-expanded="true"]::after,.gnb>li>button.cur::after{content:"";position:absolute;left:14px;right:14px;bottom:-13px;height:3px;background:var(--primary)}
+.gnb>li>button:not(.search)::after{content:"";position:absolute;left:14px;right:14px;bottom:-13px;height:3px;background:var(--primary);transform:scaleX(0);transition:transform .22s ease}
+.gnb>li>button:hover::after,.gnb>li>button[aria-expanded="true"]::after,.gnb>li>button.cur::after{transform:scaleX(1)}
+.gnb>li>button{transition:color .18s,background-color .18s}
+.gnb>li>button:active{background:var(--primary-weak)}
 .gnb .search{display:inline-flex;align-items:center;gap:6px}
 .mega{position:absolute;left:0;right:0;top:100%;background:var(--bg);border-top:1px solid var(--line-soft);border-bottom:1px solid var(--line);box-shadow:0 12px 24px rgb(0 0 0 / .08)}
 .mega .wrap{display:grid;grid-template-columns:240px 1fr;gap:40px;padding-block:32px 40px}
@@ -291,6 +296,8 @@ p{margin:0}
 .fi{border:1px solid var(--line-strong);border-radius:8px;padding:16px;font-size:.8125rem;display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
 .fi .r{display:flex;gap:16px;align-items:center}
 .fi.bad{background:var(--danger-weak);border:2px solid var(--danger)}
+.fi.bad .r .x{background:var(--danger)}
+.fi .ok,.fi .r .x{animation:pop .25s ease}
 .fi.bad .em{flex-basis:100%;border-top:1px solid var(--danger);padding-top:12px;color:var(--danger);display:flex;gap:8px}
 .spin{width:20px;height:20px;border:2px solid var(--line);border-top-color:var(--primary);border-radius:50%;animation:sp 1s linear infinite}
 @keyframes sp{to{transform:rotate(360deg)}}
@@ -363,6 +370,84 @@ p{margin:0}
 .flow-pan button:hover{background:var(--bg-sub)}
 .flow-pan button.on{background:var(--primary-weak);color:var(--primary);font-weight:700}
 .flow-pan code{font-family:ui-monospace,Consolas,monospace;font-size:.75rem;color:var(--fg-muted);min-width:44px}
+
+/* 모션: 호버·클릭 피드백 */
+.btn,.quick button,.chip,.lb-card,.svc article,.rcard,.arw,.mega ul a,.txtbtn,.cal-grid button,.cal-nav,.flow-fab,.drop a,.drop button,.dots button,.fi,.related button,.qm,.acts button{transition:background-color .18s,color .18s,border-color .18s,transform .18s,box-shadow .18s,filter .18s}
+.btn:hover{transform:translateY(-1px)}
+.btn:active,.chip:active,.lb-card:active,.arw:active,.cal-nav:active,.flow-fab:active,.qm:active{transform:scale(.96)}
+.btn.primary:hover{box-shadow:0 6px 16px rgb(37 110 244 / .3)}
+.btn.primary:active{background:var(--navy);box-shadow:none}
+.btn.line:active{background:var(--line-soft)}
+.btn.soft:hover{background:var(--primary);color:#fff}
+.btn.soft:active{background:var(--primary-hover);color:#fff}
+.chip:active,.chip.on{background:var(--primary);border-color:var(--primary);color:#fff}
+.txtbtn svg{transition:transform .2s ease}
+.txtbtn:hover svg,.quick button:hover svg,.lb-card:hover .ar,.mega ul a:hover span{transform:translateX(4px)}
+.quick button svg,.lb-card .ar,.mega ul a span{transition:transform .2s ease}
+.quick button:active{transform:scale(.97);background:var(--primary-line)}
+.svc article:hover,.rcard:hover{transform:translateY(-4px);box-shadow:0 12px 28px rgb(0 0 0 / .09);border-color:var(--primary)}
+.caro-card img{transition:transform .3s ease}
+.caro-card{overflow:hidden}
+.caro-card:hover img{transform:scale(1.04)}
+.caro-card:hover h4{color:var(--primary)}
+.lb-card:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgb(0 0 0 / .07)}
+.arw:hover{background:var(--primary-weak)}
+.flow-fab:hover{transform:translateY(-2px)}
+.nlist li{border-radius:6px;transition:background-color .15s}
+.nlist li:hover{background:var(--bg-sub)}
+.rlist .radio,.sublist .check{padding:6px 8px;margin:-6px -8px;border-radius:8px;transition:background-color .15s,color .15s}
+.rlist .radio:hover,.sublist .check:hover{background:var(--bg-sub)}
+.radio:has(input:checked){color:var(--primary);font-weight:500}
+.radio:has(input:checked) small{color:var(--fg-sub);font-weight:400}
+.radio input,.check input{transition:border-color .15s,background-color .15s}
+.radio input:checked::after,.check input:checked::after{animation:pop .2s ease}
+.rbox:checked::after{animation:pop .2s ease}
+@keyframes pop{from{transform:scale(0)}to{transform:scale(1)}}
+.acts button:hover{color:var(--primary)}
+.acts button[aria-pressed="true"]{animation:pop .25s ease}
+.screen:not([hidden]){animation:fadeUp .32s ease}
+@keyframes fadeUp{from{opacity:.35;transform:translateY(10px)}to{opacity:1;transform:none}}
+.mega:not([hidden]),.drop:not([hidden]),.cal{animation:slideD .2s ease}
+@keyframes slideD{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:none}}
+.toast:not([hidden]){animation:toastIn .25s ease}
+@keyframes toastIn{from{opacity:0;transform:translate(-50%,12px)}to{opacity:1;transform:translate(-50%,0)}}
+.modal-bg:not([hidden]) .modal{animation:modalIn .25s ease}
+@keyframes modalIn{from{opacity:0;transform:scale(.96)}to{opacity:1;transform:none}}
+
+/* 강조 메뉴: 내 상황 진단 · 지원금 신청 */
+.quick button.hl{background:var(--emph);color:var(--on-emph);font-weight:700;font-size:.9375rem}
+.quick button.hl.alt{background:var(--emph2)}
+.quick button.hl:hover{color:var(--on-emph);transform:translateY(-3px);box-shadow:0 10px 24px rgb(37 110 244 / .35);filter:brightness(1.1)}
+.quick button.hl:active{transform:scale(.97);filter:brightness(.9)}
+.hl-tag{display:block;font-size:.6875rem;font-weight:500;opacity:.85;letter-spacing:.04em;margin-bottom:2px}
+.mega ul a.hl,.drawer a.hl{background:var(--emph);color:var(--on-emph);font-weight:700}
+.mega ul a.hl:hover{background:var(--emph2);color:var(--on-emph)}
+.drawer a.hl{border-radius:8px;padding-inline:12px;margin-block:4px}
+
+/* 파일 첨부 상태 */
+.up-h{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;flex-wrap:wrap}
+.fsum{display:flex;gap:12px;font-size:.8125rem;color:var(--fg-sub);flex-wrap:wrap}
+.fsum b{font-weight:700}
+.fsum .c-ok{color:var(--primary)} .fsum .c-rej{color:var(--danger)}
+.panel .up{border:0;padding:0;margin-top:24px}
+.fi .fn{display:flex;align-items:center;gap:8px;min-width:0;word-break:break-all}
+.fi .fn small{color:var(--fg-muted);font-size:.75rem}
+.st{display:inline-flex;align-items:center;gap:6px;font-weight:700;font-size:.8125rem;min-width:88px}
+.st-ic{width:22px;height:22px;border-radius:50%;display:grid;place-items:center;flex:none;animation:pop .25s ease}
+.st-ic.ok{background:var(--primary)}
+.st-ic.rej{background:var(--danger)}
+.st .spin{width:22px;height:22px}
+.fi.st-ok .st{color:var(--primary)}
+.fi.st-load .st{color:var(--fg-muted)}
+.fi.st-rej{background:var(--danger-weak);border:2px solid var(--danger)}
+.fi.st-rej .st{color:var(--danger)}
+.fi .em{flex-basis:100%;border-top:1px solid var(--danger);padding-top:12px;color:var(--danger);display:flex;gap:8px;margin:0}
+.fi .del{color:var(--fg-muted);font-size:.8125rem}
+.fi .del:hover{color:var(--danger)}
+.fi:hover{border-color:var(--primary)}
+.fi.st-rej:hover{border-color:var(--danger)}
+.fempty{border:1px dashed var(--line);border-radius:8px;padding:20px;text-align:center;color:var(--fg-muted);font-size:.8125rem}
+.fix{color:var(--danger)}
 
 @media (max-width:960px){
   .gnb{display:none}.hamb{display:inline-flex}
@@ -458,9 +543,9 @@ p{margin:0}
     </div>
     <div class="sec-t">자주찾는 메뉴 <button class="txtbtn" style="font-size:.875rem" data-toast="자주찾는 메뉴 설정은 이 프로토타입 범위 밖이에요"><svg class="ico" viewBox="0 0 20 20" style="width:18px;height:18px"><circle cx="10" cy="10" r="3" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M10 2v3M10 15v3M2 10h3M15 10h3M4.3 4.3l2.1 2.1M13.6 13.6l2.1 2.1M4.3 15.7l2.1-2.1M13.6 6.4l2.1-2.1" stroke="currentColor" stroke-width="1.5"/></svg>설정하기</button></div>
     <div class="quick">
-      <button data-go="b1">내 상황 진단 <svg width="24" height="24" viewBox="0 0 24 24"><path d="M4 12h15M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.8"/></svg></button>
+      <button class="hl" data-go="b1">내 상황 진단 <svg width="24" height="24" viewBox="0 0 24 24"><path d="M4 12h15M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.8"/></svg></button>
       <button data-go="s41">산정특례 조회 <svg width="24" height="24" viewBox="0 0 24 24"><path d="M4 12h15M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.8"/></svg></button>
-      <button data-go="s5">지원금 신청 <svg width="24" height="24" viewBox="0 0 24 24"><path d="M4 12h15M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.8"/></svg></button>
+      <button class="hl alt" data-go="s4">지원금 신청 <svg width="24" height="24" viewBox="0 0 24 24"><path d="M4 12h15M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.8"/></svg></button>
       <button data-go="s6">신청 내역 조회 <svg width="24" height="24" viewBox="0 0 24 24"><path d="M4 12h15M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.8"/></svg></button>
     </div>
     <div class="feat"><b style="font-weight:500">대리인 신청</b><span style="color:var(--fg-sub)">직계가족만 가능하며 추가 서류가 필요합니다</span>
@@ -623,7 +708,7 @@ p{margin:0}
   <div class="wiz">
     <ol class="steps" data-steps="4" data-cur="4" data-labels="기본 정보,진단 정보,치료 정보,매칭 결과"></ol>
     <div class="gap"></div>
-    <div class="infobox"><div class="t" style="font-size:1.125rem"><span class="i-dot">i</span>총 <span id="mCount">2</span>개의 지원 제도를 찾았어요</div><p class="d" style="font-size:1.0625rem">입력하신 정보를 기준으로 확인한 결과예요. 신청 조건은 제도별로 다시 확인해 주세요.</p><ul class="who" style="font-size:1.0625rem"></ul></div>
+    <div class="infobox"><div class="t" style="font-size:1.125rem"><span class="i-dot">i</span>총 <span id="mCount">3</span>개의 지원 제도를 찾았어요</div><p class="d" style="font-size:1.0625rem">입력하신 정보를 기준으로 확인한 결과예요. 신청 조건은 제도별로 다시 확인해 주세요.</p><ul class="who" style="font-size:1.0625rem"></ul></div>
     <h2 class="q">회원님께 해당되는 지원 제도예요</h2>
     <div class="rcards">
       <article class="rcard"><input type="checkbox" class="rbox" aria-label="중증질환 산정특례 선택">
@@ -676,7 +761,7 @@ p{margin:0}
     <div style="overflow-x:auto"><table class="doc-t"><thead><tr><th>서류명</th><th>발급기관</th></tr></thead><tbody>
       <tr><td>암 진단서</td><td>진료받은 병원</td></tr><tr><td>건강보험료 납부확인서</td><td>국민건강보험공단</td></tr><tr><td>가족관계증명서</td><td>정부24 / 주민센터</td></tr><tr><td>소득금액증명원</td><td>국세청 홈택스</td></tr></tbody></table></div>
     <div class="up-area"><div class="up">
-      <h3>서류 첨부</h3><p class="sub">한 파일당 20MB까지 최대 10개를 올릴 수 있어요.</p>
+      <h3>타이틀영역</h3><p class="sub">컨텐츠 영역</p>
       <div class="drop-z" id="dropz">첨부할 파일을 여기에 끌어다 놓거나, 파일 선택 버튼을 직접 선택해주세요.
         <div class="row"><button class="btn primary sm" id="pick" style="min-height:48px">파일선택</button><button class="btn soft sm" style="min-height:48px" id="hosp">병원에서 데이터 불러오기</button></div>
         <input type="file" id="fileIn" multiple hidden>
@@ -740,10 +825,10 @@ p{margin:0}
       <div class="sublist">
         <label class="check"><input type="checkbox" class="agree" checked>신청 내용과 첨부서류를 확인했습니다</label>
         <label class="check"><input type="checkbox" class="agree" checked>개인정보 수집·이용에 동의합니다</label>
-        <label class="check"><input type="checkbox" class="agree">자격 확인을 위한 정보 조회에 동의합니다</label>
+        <label class="check"><input type="checkbox">자격 확인을 위한 정보 조회에 동의합니다</label>
         <label class="check"><input type="checkbox">신청 결과를 문자로 안내받겠습니다</label>
       </div>
-      <p class="msg err" id="agreeMsg" hidden><span class="dot"><span>!</span></span><span>필수 동의 항목 3개를 모두 확인해 주세요.</span></p>
+      <p class="msg err" id="agreeMsg" hidden><span class="dot"><span>!</span></span><span>필수 확인 항목 2개를 체크해 주세요.</span></p>
     </div>
     <div class="bnav"><button type="button" class="btn line" data-back>이전으로</button><button type="submit" class="btn primary" style="min-height:64px;font-size:1.1875rem">신청서 제출하기</button></div>
   </form></div>
@@ -756,7 +841,7 @@ p{margin:0}
       <svg class="ck" width="44" height="34" viewBox="0 0 44 34"><path d="M4 17l12 12L40 5" fill="none" stroke="currentColor" stroke-width="6"/></svg>
       <h2>신청이 완료되었습니다</h2>
       <p class="s">제출한 신청서는 신청 내역에서 확인할 수 있습니다.</p>
-      <div class="info"><div><b>신청 서비스</b><span id="dSvc">암환자 의료비 지원</span></div><div><b>진행 상태</b><span style="color:var(--primary)">접수 완료</span></div><div><b>접수 번호</b><span id="dNo" style="font-variant-numeric:tabular-nums"></span></div></div>
+      <div class="info"><div><b>신청 서비스</b><span id="dSvc">암환자 의료비 지원</span></div><div><b>진행 상태</b><span style="color:var(--primary)">접수 완료</span></div></div>
       <div class="next"><b>이후 진행 안내</b><p>담당 기관에서 서류와 자격을 확인한 뒤 결과를 안내합니다.</p></div>
     </div>
     <div class="done-btns"><button class="btn primary" style="min-width:245px" data-toast="신청 내역: 암환자 의료비 지원 · 접수 완료 (처리 예정 14일)">신청 내역 확인</button><button class="btn line" data-go="s1">홈으로</button></div>
@@ -820,8 +905,8 @@ const state={logged:false,user:'홍길동',hist:[],apply:'암환자 의료비 �
 const AUTH=['b1','b2','b3','b4','s3','s4','s5','s6'];
 const MEGA={
   m1:{t:'지원제도 안내',d:'암환자가 받을 수 있는 의료비 지원 제도를 확인하세요.',l:[['재난적의료비 지원','s3'],['산정특례 등록제도','s41'],['암환자 의료비 지원','s41'],['지원제도 조회 결과','s41']]},
-  m2:{t:'내 상황 확인',d:'몇 가지 질문으로 나에게 맞는 제도를 찾아요.',l:[['내 상황 진단','b1'],['재난적의료비 기한 계산','s3'],['매칭 결과 보기','b4']]},
-  m3:{t:'온라인 신청',d:'서류를 첨부하고 신청서를 제출하세요.',l:[['구비서류 확인','s4'],['신청서 작성','s5']]},
+  m2:{t:'내 상황 확인',d:'몇 가지 질문으로 나에게 맞는 제도를 찾아요.',l:[['내 상황 진단','b1',1],['재난적의료비 기한 계산','s3'],['매칭 결과 보기','b4']]},
+  m3:{t:'온라인 신청',d:'서류를 첨부하고 신청서를 제출하세요.',l:[['지원금 신청 (구비서류 첨부)','s4',1],['신청서 작성','s5']]},
   m4:{t:'신청 내역 조회',d:'제출한 신청서의 처리 상태를 확인하세요.',l:[['신청 완료 내역','s6']]}
 };
 const toastEl=$('#toast');let tt;
@@ -839,7 +924,7 @@ function show(id,push=true){
   window.scrollTo(0,0);
   $$('#gnb [data-mega]').forEach(b=>b.classList.toggle('cur',MEGA[b.dataset.mega].l.some(x=>x[1]===id)));
   renderFlow(id);
-  if(id==='s6')$('#dNo').textContent='2026-'+String(Math.floor(Math.random()*900000)+100000);
+  if(id==='s4')replayDemo();
 }
 document.addEventListener('click',e=>{
   const g=e.target.closest('[data-go]');
@@ -866,7 +951,7 @@ function openMega(b){
   const m=MEGA[b.dataset.mega];closeAll('mega');
   $$('[data-mega]').forEach(x=>x.setAttribute('aria-expanded',String(x===b)));
   $('#mega-t').textContent=m.t;$('#mega-d').textContent=m.d;
-  $('#mega-l').innerHTML=m.l.map(([n,s])=>`<li><a href="#${s}" data-go="${s}">${n}<span>›</span></a></li>`).join('');
+  $('#mega-l').innerHTML=m.l.map(([n,s,h])=>`<li><a href="#${s}" data-go="${s}" class="${h?'hl':''}">${n}<span>›</span></a></li>`).join('');
   $('#mega').hidden=false;
 }
 $$('[data-mega]').forEach(b=>{
@@ -882,7 +967,7 @@ function searchGo(q){if(!q){toast('검색어를 입력해 주세요');return}
   if(/산정특례|조회|지원금/.test(q)&&!/신청 내역/.test(q))show('s41');else if(/신청 내역/.test(q))show('s6');else if(/진단서|서류/.test(q))show('s4');else if(/모의계산|상황/.test(q))show('b1');else toast(`'${q}' 검색 결과는 이 프로토타입 범위 밖이에요`)}
 $$('[data-q]').forEach(c=>c.addEventListener('click',()=>{$('#q').value=c.dataset.q;searchGo(c.dataset.q)}));
 $('#hamb').addEventListener('click',()=>{
-  $('#drawerBody').innerHTML=Object.values(MEGA).map(m=>`<h4>${m.t}</h4>`+m.l.map(([n,s])=>`<a href="#${s}" data-go="${s}">${n}</a>`).join('')).join('')+`<h4>설정</h4><a href="#" data-open="display">글자·화면 표시 설정</a>`;
+  $('#drawerBody').innerHTML=Object.values(MEGA).map(m=>`<h4>${m.t}</h4>`+m.l.map(([n,s,h])=>`<a href="#${s}" data-go="${s}" class="${h?'hl':''}">${n}</a>`).join('')).join('')+`<h4>설정</h4><a href="#" data-open="display">글자·화면 표시 설정</a>`;
   $('#drawer').hidden=false});
 $('#drawer').addEventListener('click',e=>{if(e.target.id==='drawer'||e.target.closest('[data-close],[data-go],[data-open]'))$('#drawer').hidden=true});
 
@@ -1000,24 +1085,32 @@ function drawDetail(i){$('#dtTitle').textContent='제도 상세정보 · '+DETAI
 document.addEventListener('click',e=>{const d=e.target.closest('[data-detail]');if(d){drawDetail(+d.dataset.detail);$('#dtTitle').scrollIntoView({behavior:'smooth',block:'start'})}});
 drawDetail(0);
 
-/* 파일 업로드 */
-let files=[{n:'관련서류 1 [hwp, 17KB]',s:'load'},{n:'관련서류 2 [hwp, 17KB]',s:'ok'},{n:'관련서류 3 [hwp, 17KB]',s:'del'},{n:'관련서류 4 [hwp, 17KB]',s:'bad'},{n:'관련서류 5 [hwp, 17KB]',s:'form'}];
+/* 파일 첨부: 우측 상태 아이콘 (로딩 → 체크 / 반려) — Figma S4 목록 상태 그대로 */
+const CHK='<span class="ok" role="img" aria-label="첨부 완료" title="첨부 완료"><svg width="10" height="10" viewBox="0 0 12 12"><path d="M2 6l3 3 5-6" fill="none" stroke="#fff" stroke-width="2"/></svg></span>';
+const SPN='<span class="spin" role="img" aria-label="확인 중" title="확인 중"></span>';
+const OKEXT=['pdf','jpg','jpeg','png','hwp','hwpx','docx','xlsx'];
+const MSG={size:'등록 가능한 파일 용량을 초과하였습니다.<br>20MB 미만의 파일만 등록할 수 있습니다.',ext:'등록할 수 없는 파일 형식입니다.<br>PDF, JPG, PNG, HWP 파일만 등록할 수 있습니다.'};
+let files=[{n:'관련서류 1 [hwp, 17KB]',s:'load',demo:1},{n:'관련서류 2 [hwp, 17KB]',s:'ok'},{n:'관련서류 3 [hwp, 17KB]',s:'del'},{n:'관련서류 4 [hwp, 17KB]',s:'bad',why:'size'},{n:'관련서류 5 [hwp, 17KB]',s:'form'}];
 function drawFiles(){$('#fCnt').textContent=files.length+'개';
-  $('#flist').innerHTML=files.map((f,i)=>`<li class="fi ${f.s==='bad'?'bad':''}"><span>${f.n}</span><span class="r">${
-    f.s==='load'?'<span class="spin" aria-label="업로드 중"></span>':f.s==='ok'?'<span class="ok"><svg width="10" height="10" viewBox="0 0 12 12"><path d="M2 6l3 3 5-6" fill="none" stroke="#fff" stroke-width="2"/></svg></span>':
+  $('#flist').innerHTML=files.length?files.map((f,i)=>`<li class="fi ${f.s==='bad'?'bad':''}"><span>${f.n}</span><span class="r">${
+    f.s==='load'?SPN:f.s==='ok'?CHK:
     f.s==='form'?'<button class="txtbtn" data-toast="서식 파일을 내려받는 동작이에요 (프로토타입)">다운로드 ⤓</button><button class="txtbtn" data-toast="서식 미리보기 (프로토타입)">바로보기 ›</button>':
-    `<button class="txtbtn" data-del="${i}">삭제 <span class="x">✕</span></button>`}</span>${f.s==='bad'?'<p class="em"><span class="x" style="background:var(--danger)">✕</span>등록 가능한 파일 용량을 초과하였습니다.<br>20MB 미만의 파일만 등록할 수 있습니다.</p>':''}</li>`).join('')}
+    `<button class="txtbtn" data-del="${i}" aria-label="${f.n} 삭제${f.s==='bad'?' (반려)':''}">삭제 <span class="x">✕</span></button>`}</span>${f.s==='bad'?`<p class="em"><span class="x" style="background:var(--danger)">✕</span><span>${MSG[f.why]}</span></p>`:''}</li>`).join('')
+    :'<li class="fempty">첨부한 파일이 없어요. 위의 파일선택 버튼으로 서류를 올려 주세요.</li>'}
+function verify(it,ms){it.s='load';drawFiles();setTimeout(()=>{if(!files.includes(it))return;it.s=it.why?'bad':'ok';drawFiles();
+  if(it.why)toast('반려: '+it.n.split(' [')[0]+' — '+MSG[it.why].split('<br>')[0]);},ms)}
 function addFiles(list){for(const f of list){if(files.length>=10){toast('파일은 최대 10개까지 올릴 수 있어요');break}
-  const kb=Math.max(1,Math.round(f.size/1024)),ext=(f.name.split('.').pop()||'file').toLowerCase();
-  const item={n:`${f.name} [${ext}, ${kb>1024?(kb/1024).toFixed(1)+'MB':kb+'KB'}]`,s:f.size>20*1048576?'bad':'load'};files.push(item);
-  if(item.s==='load')setTimeout(()=>{item.s='del';drawFiles()},900)}drawFiles()}
+  const kb=Math.max(1,Math.round(f.size/1024)),ext=(f.name.includes('.')?f.name.split('.').pop():'file').toLowerCase();
+  const it={n:`${f.name} [${ext}, ${kb>1024?(kb/1024).toFixed(1)+'MB':kb+'KB'}]`,why:f.size>20*1048576?'size':!OKEXT.includes(ext)?'ext':null};
+  files.push(it);verify(it,1200+Math.random()*900)}}
+function replayDemo(){files.filter(f=>f.demo).forEach((f,i)=>verify(f,2200+i*600))}
 $('#pick').onclick=()=>$('#fileIn').click();$('#fileIn').onchange=e=>{addFiles(e.target.files);e.target.value=''};
 const dz=$('#dropz');['dragenter','dragover'].forEach(t=>dz.addEventListener(t,e=>{e.preventDefault();dz.classList.add('over')}));
 ['dragleave','drop'].forEach(t=>dz.addEventListener(t,e=>{e.preventDefault();dz.classList.remove('over')}));dz.addEventListener('drop',e=>addFiles(e.dataTransfer.files));
-$('#flist').addEventListener('click',e=>{const d=e.target.closest('[data-del]');if(d){files.splice(+d.dataset.del,1);drawFiles()}});
+$('#flist').addEventListener('click',e=>{const d=e.target.closest('[data-del]');if(d){files.splice(+d.dataset.del,1);drawFiles();toast('파일을 삭제했어요')}});
 $('#delAll').onclick=()=>{files=[];drawFiles();toast('첨부한 파일을 모두 삭제했어요')};
-$('#hosp').onclick=()=>{toast('진료받은 병원에서 암 진단서를 불러오는 중…');const it={n:'암 진단서_서울○○병원 [pdf, 312KB]',s:'load'};if(files.length<10){files.push(it);drawFiles();setTimeout(()=>{it.s='ok';drawFiles();toast('암 진단서를 불러왔어요')},1300)}};
-setTimeout(()=>{files[0].s='ok';drawFiles()},4000);drawFiles();
+$('#hosp').onclick=()=>{if(files.length>=10){toast('파일은 최대 10개까지 올릴 수 있어요');return}toast('진료받은 병원에서 암 진단서를 불러오는 중…');const it={n:'암 진단서_서울○○병원 [pdf, 312KB]',why:null};files.push(it);verify(it,1500)};
+drawFiles();
 
 /* 툴팁 */
 document.addEventListener('click',e=>{const q=e.target.closest('[data-tip]');if(!q)return;e.stopPropagation();const had=q.parentNode.querySelector('.tip');closeAll();if(had)return;
